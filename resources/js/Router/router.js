@@ -6,6 +6,7 @@ import Logout from '../components/auth/Logout';
 import Forum from '../components/forum/Forum';
 import Read from '../components/forum/Read';
 import Create from '../components/forum/Create';
+import CreateCategory from '../components/category/CreateCategory';
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,7 @@ const routes = [
   { path: '/logout', component: Logout },
   { path: '/question/:slug', component: Read, name: 'read' },
   { path: '/create', component: Create },
+  { path: '/category', component: CreateCategory },
 ];
 
 const router = new VueRouter({
