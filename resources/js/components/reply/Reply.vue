@@ -5,6 +5,8 @@
         <v-card-title>
           <div class="headline">{{ question.user }}</div>
           <div class="ml-3">said {{ question.created_at }}</div>
+          <v-spacer></v-spacer>
+          <like :content="question"></like>
         </v-card-title>
         <v-divider></v-divider>
         <edit-reply v-if="editing" :reply="question"></edit-reply>
@@ -28,6 +30,7 @@
 
 <script>
 import EditReply from "./EditReply";
+import Like from "../likes/Like";
 export default {
   data() {
     return {
@@ -60,6 +63,6 @@ export default {
       });
     }
   },
-  components: { EditReply }
+  components: { EditReply, Like }
 };
 </script>

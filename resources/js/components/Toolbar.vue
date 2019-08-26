@@ -3,6 +3,7 @@
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title>Bitfumes</v-toolbar-title>
     <v-spacer></v-spacer>
+    <app-notification v-if="loggedIn"></app-notification>
     <div class="hidden-sm-and-down">
       <router-link v-for="item in itmes" :key="item.title" :to="item.to" v-if="item.show">
         <v-btn flat>{{ item.title }}</v-btn>
@@ -12,9 +13,11 @@
 </template>
 
 <script>
+import AppNotification from "./AppNotification";
 export default {
   data() {
     return {
+      loggedIn: User.loggedIn(),
       itmes: [
         { title: "Forum", to: "/forum", show: true },
         { title: "Ask Question", to: "/create", show: User.loggedIn() },
@@ -33,6 +36,7 @@ export default {
     EventBus.$on("logout", () => {
       User.logout();
     });
-  }
+  },
+  components: { AppNotification }
 };
 </script>
