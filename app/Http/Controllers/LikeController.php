@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LikeEvent;
 use App\Model\Like;
 use Illuminate\Http\Request;
 use App\Model\Reply;
@@ -21,12 +22,14 @@ class LikeController extends Controller
          'user_id' => auth()->id(),
        // 'user_id' => '1'
     ]);
+
+    broadcast(new LikeEvent($reply->id,1))->toOthers();
   }
 
   public function unlikeIt(Reply $reply){
 
      $reply->likes()->where('user_id',auth()->id())->first()->delete();
 
-    //$reply->likes()->where('user_id','1')->first()->delete();
-  }
+     broadcast(new LikeEvent($reply->id,0))->toOthers();
+    }
 }

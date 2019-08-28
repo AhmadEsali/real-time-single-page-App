@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Model\Reply;
-use Illuminate\Http\Request;
 use App\Model\Question;
-use Symfony\Component\HttpFoundation\Response;
+use App\Events\DeleteReply;
+use Illuminate\Http\Request;
 use App\Http\Resources\ReplyResource;
 use App\Notifications\NewReplyNotification;
+use Symfony\Component\HttpFoundation\Response;
 
 class ReplyController extends Controller
 {
@@ -89,6 +90,8 @@ class ReplyController extends Controller
     public function destroy(Question $question,Reply $reply)
     {
         $reply->delete();
+        broadcast(new DeleteReply($reply->id))->toOthers();
+
         return response(null,Response::HTTP_NO_CONTENT);
 
     }
