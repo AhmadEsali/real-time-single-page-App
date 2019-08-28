@@ -4,7 +4,10 @@
     <show-question v-else :question="question"></show-question>
     <v-container>
       <replies :question="question"></replies>
-      <new-reply :questionSlug="question.slug"></new-reply>
+      <new-reply v-if="loggedIn" :questionSlug="question.slug"></new-reply>
+      <div class="mt-4" v-else>
+        <router-link to="/login">Login to reply</router-link>
+      </div>
     </v-container>
   </div>
 </template>
@@ -40,7 +43,12 @@ export default {
       });
     }
   },
-  components: { ShowQuestion, EditQuestion, Replies, NewReply }
+  components: { ShowQuestion, EditQuestion, Replies, NewReply },
+  computed: {
+    loggedIn() {
+      return User.loggedIn();
+    }
+  }
 };
 </script>
 
